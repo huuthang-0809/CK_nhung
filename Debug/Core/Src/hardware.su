@@ -1,0 +1,13 @@
+../Drivers/CMSIS/Include/core_cm4.h:1684:22:__NVIC_EnableIRQ	16	static,ignoring_inline_asm
+../Core/Src/hardware.c:10:6:delay_ms	24	static
+../Core/Src/hardware.c:21:13:SystemClock_Config	4	static
+../Core/Src/hardware.c:26:13:GPIO_Init	4	static
+../Core/Src/hardware.c:50:13:ADC1_Init	4	static
+../Core/Src/hardware.c:64:13:I2C1_Init	4	static
+../Core/Src/hardware.c:82:13:Timer2_Init	8	static
+../Core/Src/hardware.c:92:6:initHardware	8	static
+../Core/Src/hardware.c:102:6:handleSystemState	16	static
+../Core/Src/hardware.c:126:6:USART2_Init	16	static
+../Core/Src/hardware.c:142:6:UART2_SendChar	16	static
+../Core/Src/hardware.c:148:6:UART2_SendString	16	static
+../Core/Src/hardware.c:153:6:UART2_SendFloat	56	static

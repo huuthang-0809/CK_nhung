@@ -1,0 +1,13 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#define LCD_ADDR (0x27 << 1)
+#define ADC_BASELINE 1300
+#define PPM_MAX 10000
+#define THRESHOLD_SAFE 1000
+#define THRESHOLD_WARNING 5000
+#define THRESHOLD_DANGER 8000
+#define BLINK_MIN_PERIOD 100
+#define BLINK_MAX_PERIOD 500
+
+#endif

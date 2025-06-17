@@ -1,0 +1,9 @@
+../Core/Src/display.c:10:13:I2C1_WriteByte	5
+../Core/Src/display.c:23:13:lcd_send_cmd	2
+../Core/Src/display.c:36:13:lcd_send_data	2
+../Core/Src/display.c:49:13:lcd_set_cursor	2
+../Core/Src/display.c:54:13:lcd_send_string	2
+../Core/Src/display.c:58:13:lcd_send_line	1
+../Core/Src/display.c:64:6:display_init	1
+../Core/Src/display.c:75:6:updateDisplay	1
+../Core/Src/display.c:90:6:updateDisplayStopped	1
