@@ -8,7 +8,13 @@
 #define SMTP_PORT 465
 #define AUTHOR_EMAIL "huuthang08092004@gmail.com"
 #define AUTHOR_PASS "klqf wllk pyau vbzd"
-#define RECIPIENT_EMAIL "thanglc302@gmail.com"
+
+// Định nghĩa mảng chứa các địa chỉ email người nhận
+const char* recipients[] = {
+    "thanglc302@gmail.com",
+    "22022152@vnu.edu.vn"
+};
+#define NUM_RECIPIENTS (sizeof(recipients)/sizeof(recipients[0]))
 
 #define ALERT_PIN D5  // GPIO14
 
@@ -40,7 +46,12 @@ void setup() {
   message.sender.name = "Gas Warning System";
   message.sender.email = AUTHOR_EMAIL;
   message.subject = "⚠️ GAS ALERT!";
-  message.addRecipient("User", RECIPIENT_EMAIL);
+  
+  // Thêm tất cả người nhận từ mảng vào thông điệp
+  for (int i = 0; i < NUM_RECIPIENTS; i++) {
+    message.addRecipient("User", recipients[i]);
+  }
+  
   message.text.content = "Gas level exceeded the safe limit! Please take action!";
   message.text.charSet = "utf-8";
   message.text.transfer_encoding = Content_Transfer_Encoding::enc_7bit;
