@@ -15,11 +15,10 @@ bool readGasSensor(float *gas_ppm) {
     float adc_voltage = (adc_val / 4095.0f) * VOLTAGE_REF; // Tính điện áp đầu ra
     float Rs;
     if (adc_voltage > 0.0f) {
-        Rs = (VCC * RL / adc_voltage) - RL; // Tính Rs
+        Rs = (VCC * RL / adc_voltage) - RL;
     } else {
         Rs = 0.0f;
     }
-    float ratio = (R0 > 0.0f) ? (Rs / R0) : 0.0f; // Tính tỉ lệ Rs/R0, tránh chia cho 0
-    *gas_ppm = (ratio > 0.0f) ? (100.0f * pow(ratio, -2.5f)) : 0.0f; // Tính ppm
-    return true;
+    float ratio = (R0 > 0.0f) ? (Rs / R0) : 0.0f;
+    *gas_ppm = (ratio > 0.0f) ? (100.0f * pow(ratio, -2.5f)) : 0.0f;
 }

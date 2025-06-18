@@ -72,17 +72,17 @@ void updateDisplay(float gas_ppm, bool is_reset) {
         snprintf(buffer, sizeof(buffer), "%-16s", "Gas: -- ppm"); // Padding lên 16 ký tự
         lcd_set_cursor(0, 0);
         lcd_send_string(buffer);
-        snprintf(buffer, sizeof(buffer), "%-16s", "Status: RESET"); // Padding lên 16 ký tự
+        snprintf(buffer, sizeof(buffer), "%-16s", "Status: RESET");
         lcd_set_cursor(1, 0);
         lcd_send_string(buffer);
     } else {
         // Hiển thị bình thường
-        snprintf(buffer, sizeof(buffer), "Gas: %5d ppm    ", (int)gas_ppm); // Padding lên 16 ký tự
+        snprintf(buffer, sizeof(buffer), "Gas: %5d ppm    ", (int)gas_ppm);
         lcd_set_cursor(0, 0);
         lcd_send_string(buffer);
         SystemState state = getSystemState(gas_ppm);
         const char* status = stateStrings[state];
-        snprintf(buffer, sizeof(buffer), "Status: %-8s", status); // Padding trạng thái lên 16 ký tự
+        snprintf(buffer, sizeof(buffer), "Status: %-8s", status);
         lcd_set_cursor(1, 0);
         lcd_send_string(buffer);
     }
@@ -90,10 +90,8 @@ void updateDisplay(float gas_ppm, bool is_reset) {
 
 void updateDisplayStopped(void) {
     char buffer[20];
-    snprintf(buffer, sizeof(buffer), "%-16s", ""); // 16 khoảng trắng
-    lcd_set_cursor(0, 0);
+    snprintf(buffer, sizeof(buffer), "%-16s", "");
     lcd_send_string(buffer);
-    snprintf(buffer, sizeof(buffer), "%-16s", "Status: STOPPED"); // Padding lên 16 ký tự
-    lcd_set_cursor(1, 0);
+    snprintf(buffer, sizeof(buffer), "%-16s", "Status: STOPPED");
     lcd_send_string(buffer);
 }
