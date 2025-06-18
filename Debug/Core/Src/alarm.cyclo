@@ -1,3 +1,4 @@
+../Drivers/CMSIS/Include/core_cm4.h:1684:22:__NVIC_EnableIRQ	2
 ../Core/Src/alarm.c:9:6:TIM2_IRQHandler	3
-../Core/Src/alarm.c:20:6:handleAlarm	5
-../Core/Src/alarm.c:59:13:getSystemState	4
+../Core/Src/alarm.c:24:6:handleAlarm	7
+../Core/Src/alarm.c:96:13:getSystemState	4

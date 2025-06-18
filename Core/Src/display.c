@@ -89,9 +89,8 @@ void updateDisplay(float gas_ppm, bool is_reset) {
 }
 
 void updateDisplayStopped(void) {
-    char buffer[20];
-    snprintf(buffer, sizeof(buffer), "%-16s", "");
-    lcd_send_string(buffer);
-    snprintf(buffer, sizeof(buffer), "%-16s", "Status: STOPPED");
-    lcd_send_string(buffer);
+    lcd_set_cursor(0, 0);
+    lcd_send_string("                ");
+    lcd_set_cursor(1, 0);
+    lcd_send_string("Status: STOPPED ");
 }

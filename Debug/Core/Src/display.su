@@ -5,4 +5,4 @@
 ../Core/Src/display.c:53:13:lcd_send_string	16	static
 ../Core/Src/display.c:57:6:display_init	8	static
 ../Core/Src/display.c:68:6:updateDisplay	48	static
-../Core/Src/display.c:91:6:updateDisplayStopped	32	static
+../Core/Src/display.c:91:6:updateDisplayStopped	8	static

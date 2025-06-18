@@ -21,4 +21,6 @@ bool readGasSensor(float *gas_ppm) {
     }
     float ratio = (R0 > 0.0f) ? (Rs / R0) : 0.0f;
     *gas_ppm = (ratio > 0.0f) ? (100.0f * pow(ratio, -2.5f)) : 0.0f;
+
+    return true;
 }
