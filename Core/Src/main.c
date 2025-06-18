@@ -5,6 +5,7 @@
 #include "alarm.h"
 
 volatile uint8_t system_running = 1;
+volatile uint32_t safe_timer = 0;
 
 int main(void) {
     initHardware();
@@ -14,8 +15,15 @@ int main(void) {
         if (system_running) {
             float gas_ppm;
             if (readGasSensor(&gas_ppm)) {
-                handleAlarm(gas_ppm);
-                updateDisplay(gas_ppm);
+                if (safe_timer > 0) {
+                    // Trạng thái reset: Đặt hệ thống về trạng thái an toàn tạm thời
+                    updateDisplay(0.0, true);
+                    safe_timer--; // Giảm thời gian reset
+                } else {
+                    // Hoạt động bình thường
+                    handleAlarm(gas_ppm);
+                    updateDisplay(gas_ppm, false);
+                }
             }
         } else {
             updateDisplayStopped();

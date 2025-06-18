@@ -4,6 +4,7 @@
 #include "hardware.h"
 
 static volatile uint8_t led_red_enable = 0;
+const char* stateStrings[] = {"SAFE", "WARNING", "DANGER", "DANGER++"};
 
 void TIM2_IRQHandler(void) {
     if (TIM2->SR & TIM_SR_UIF) {
@@ -23,8 +24,12 @@ void handleAlarm(float gas_ppm) {
         GPIOA->ODR |= (1 << 6);
         delay_ms(100);
         GPIOA->ODR &= ~(1 << 6);
-        int blink_period = BLINK_MAX_PERIOD - ((int)(gas_ppm - THRESHOLD_DANGER) * (BLINK_MAX_PERIOD - BLINK_MIN_PERIOD)) / (PPM_MAX - THRESHOLD_DANGER);
-        if (blink_period < BLINK_MIN_PERIOD) blink_period = BLINK_MIN_PERIOD;
+
+        int base_ppm = (int)gas_ppm;
+        int step = (base_ppm - THRESHOLD_DANGER) / 1000;
+        int blink_period = 500 - (step * 50); // Giảm 50ms mỗi mốc 1000 ppm
+        if (blink_period < 100) blink_period = 100;
+
         TIM2->ARR = blink_period;
         GPIOB->ODR |= (1 << 1);
         led_red_enable = 1;
@@ -34,7 +39,7 @@ void handleAlarm(float gas_ppm) {
         GPIOA->ODR |= (1 << 6);
         delay_ms(100);
         GPIOA->ODR &= ~(1 << 6);
-        TIM2->ARR = BLINK_MAX_PERIOD;
+        TIM2->ARR = 1000;
         GPIOB->ODR |= (1 << 1);
         led_red_enable = 1;
     } else if (gas_ppm > THRESHOLD_SAFE) {

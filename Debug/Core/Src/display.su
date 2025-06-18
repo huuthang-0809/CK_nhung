@@ -1,9 +1,8 @@
-../Core/Src/display.c:10:13:I2C1_WriteByte	16	static
-../Core/Src/display.c:23:13:lcd_send_cmd	32	static
-../Core/Src/display.c:36:13:lcd_send_data	32	static
-../Core/Src/display.c:49:13:lcd_set_cursor	24	static
-../Core/Src/display.c:54:13:lcd_send_string	16	static
-../Core/Src/display.c:58:13:lcd_send_line	40	static
-../Core/Src/display.c:64:6:display_init	8	static
-../Core/Src/display.c:75:6:updateDisplay	48	static
-../Core/Src/display.c:90:6:updateDisplayStopped	8	static
+../Core/Src/display.c:9:13:I2C1_WriteByte	16	static
+../Core/Src/display.c:22:13:lcd_send_cmd	32	static
+../Core/Src/display.c:35:13:lcd_send_data	32	static
+../Core/Src/display.c:48:13:lcd_set_cursor	24	static
+../Core/Src/display.c:53:13:lcd_send_string	16	static
+../Core/Src/display.c:57:6:display_init	8	static
+../Core/Src/display.c:68:6:updateDisplay	48	static
+../Core/Src/display.c:91:6:updateDisplayStopped	32	static

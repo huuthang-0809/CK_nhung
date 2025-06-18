@@ -1,2 +1,2 @@
-../Core/Src/sensor.c:5:17:Read_ADC1	2
-../Core/Src/sensor.c:12:6:readGasSensor	2
+../Core/Src/sensor.c:6:17:Read_ADC1	2
+../Core/Src/sensor.c:13:6:readGasSensor	3

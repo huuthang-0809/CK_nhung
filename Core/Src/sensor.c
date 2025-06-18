@@ -1,6 +1,7 @@
 #include "sensor.h"
 #include "stm32f4xx.h"
 #include "config.h"
+#include <math.h>
 
 static uint16_t Read_ADC1(void) {
     ADC1->SR = 0;
@@ -11,8 +12,14 @@ static uint16_t Read_ADC1(void) {
 
 bool readGasSensor(float *gas_ppm) {
     uint16_t adc_val = Read_ADC1();
-    int32_t adj = (int32_t)adc_val - ADC_BASELINE;
-    if (adj < 0) adj = 0;
-    *gas_ppm = ((float)adj / (4095.0f - ADC_BASELINE)) * PPM_MAX;
+    float adc_voltage = (adc_val / 4095.0f) * VOLTAGE_REF; // Tính điện áp đầu ra
+    float Rs;
+    if (adc_voltage > 0.0f) {
+        Rs = (VCC * RL / adc_voltage) - RL; // Tính Rs
+    } else {
+        Rs = 0.0f;
+    }
+    float ratio = (R0 > 0.0f) ? (Rs / R0) : 0.0f; // Tính tỉ lệ Rs/R0, tránh chia cho 0
+    *gas_ppm = (ratio > 0.0f) ? (100.0f * pow(ratio, -2.5f)) : 0.0f; // Tính ppm
     return true;
 }

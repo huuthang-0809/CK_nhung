@@ -5,6 +5,7 @@
 static volatile uint8_t prev_btn1 = 1;
 static volatile uint8_t prev_btn2 = 1;
 extern volatile uint8_t system_running;
+extern volatile uint32_t safe_timer;
 
 // Hàm delay bằng SysTick
 void delay_ms(uint32_t ms) {
@@ -114,8 +115,12 @@ void handleSystemState(void) {
 
     // Phát hiện cạnh xuống SW2
     if (prev_btn2 == 1 && btn2 == 0) {
-        system_running = 0;
-        GPIOB->ODR &= ~((1 << 1) | (1 << 2) | (1 << 3));
+        system_running = 1; // Đảm bảo hệ thống hoạt động
+        safe_timer = 5; // Đặt thời gian reset là 5 giây
+        TIM2->CR1 &= ~TIM_CR1_CEN;
+        NVIC_DisableIRQ(TIM2_IRQn);
+        GPIOB->ODR &= ~((1 << 1) | (1 << 2) | (1 << 4));
+        GPIOB->ODR |= (1 << 3);
         GPIOA->ODR &= ~((1 << 1) | (1 << 5) | (1 << 6));
         delay_ms(200);
     }

@@ -10,6 +10,8 @@ typedef enum {
     STATE_EXTREME_DANGER
 } SystemState;
 
+extern const char* stateStrings[];
+
 void handleAlarm(float gas_ppm);
 SystemState getSystemState(float gas_ppm);
 

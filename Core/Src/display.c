@@ -4,8 +4,7 @@
 #include "config.h"
 #include "alarm.h"
 #include <stdio.h>
-
-static const char* stateStrings[] = {"SAFE", "WARNING", "DANGER", "DANGER++"};
+#include <stdbool.h>
 
 static void I2C1_WriteByte(uint8_t addr, uint8_t data) {
     I2C1->CR1 |= I2C_CR1_START;
@@ -55,12 +54,6 @@ static void lcd_send_string(char *str) {
     while (*str) lcd_send_data(*str++);
 }
 
-static void lcd_send_line(const char* str) {
-    char buffer[17];
-    snprintf(buffer, 17, "%-16s", str);
-    lcd_send_string(buffer);
-}
-
 void display_init(void) {
     delay_ms(50);
     lcd_send_cmd(0x33);
@@ -72,26 +65,35 @@ void display_init(void) {
     delay_ms(2);
 }
 
-void updateDisplay(float gas_ppm) {
-    char temp[20];
-    // Dòng 0: Nồng độ khí
-    snprintf(temp, sizeof(temp), "Gas: %d ppm", (int)gas_ppm);
-    lcd_set_cursor(0, 0);
-    lcd_send_line(temp);
-
-    // Dòng 1: Trạng thái
-    SystemState state = getSystemState(gas_ppm);
-    const char* status = stateStrings[state];
-    snprintf(temp, sizeof(temp), "Status: %s", status);
-    lcd_set_cursor(1, 0);
-    lcd_send_line(temp);
+void updateDisplay(float gas_ppm, bool is_reset) {
+    char buffer[20];
+    if (is_reset) {
+        // Hiển thị trạng thái reset
+        snprintf(buffer, sizeof(buffer), "%-16s", "Gas: -- ppm"); // Padding lên 16 ký tự
+        lcd_set_cursor(0, 0);
+        lcd_send_string(buffer);
+        snprintf(buffer, sizeof(buffer), "%-16s", "Status: RESET"); // Padding lên 16 ký tự
+        lcd_set_cursor(1, 0);
+        lcd_send_string(buffer);
+    } else {
+        // Hiển thị bình thường
+        snprintf(buffer, sizeof(buffer), "Gas: %5d ppm    ", (int)gas_ppm); // Padding lên 16 ký tự
+        lcd_set_cursor(0, 0);
+        lcd_send_string(buffer);
+        SystemState state = getSystemState(gas_ppm);
+        const char* status = stateStrings[state];
+        snprintf(buffer, sizeof(buffer), "Status: %-8s", status); // Padding trạng thái lên 16 ký tự
+        lcd_set_cursor(1, 0);
+        lcd_send_string(buffer);
+    }
 }
 
 void updateDisplayStopped(void) {
-    // Dòng 0: Xóa
+    char buffer[20];
+    snprintf(buffer, sizeof(buffer), "%-16s", ""); // 16 khoảng trắng
     lcd_set_cursor(0, 0);
-    lcd_send_line("");
-    // Dòng 1: Trạng thái STOPPED
+    lcd_send_string(buffer);
+    snprintf(buffer, sizeof(buffer), "%-16s", "Status: STOPPED"); // Padding lên 16 ký tự
     lcd_set_cursor(1, 0);
-    lcd_send_line("Status: STOPPED");
+    lcd_send_string(buffer);
 }
