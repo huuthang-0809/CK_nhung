@@ -21,6 +21,7 @@ void handleAlarm(float gas_ppm) {
     if (gas_ppm > THRESHOLD_DANGER) {
         GPIOB->ODR &= ~((1 << 2) | (1 << 3) | (1 << 4));
         GPIOA->ODR |= (1 << 1) | (1 << 5);
+
         GPIOA->ODR |= (1 << 6);
         delay_ms(100);
         GPIOA->ODR &= ~(1 << 6);
@@ -36,9 +37,11 @@ void handleAlarm(float gas_ppm) {
     } else if (gas_ppm > THRESHOLD_WARNING) {
         GPIOB->ODR &= ~((1 << 2) | (1 << 3) | (1 << 4));
         GPIOA->ODR |= (1 << 1) | (1 << 5);
+
         GPIOA->ODR |= (1 << 6);
         delay_ms(100);
         GPIOA->ODR &= ~(1 << 6);
+
         TIM2->ARR = 1000;
         GPIOB->ODR |= (1 << 1);
         led_red_enable = 1;
@@ -46,7 +49,11 @@ void handleAlarm(float gas_ppm) {
         GPIOB->ODR &= ~((1 << 1) | (1 << 3) | (1 << 4));
         GPIOA->ODR &= ~((1 << 1) | (1 << 5));
         GPIOB->ODR |= (1 << 2);
+
         GPIOA->ODR |= (1 << 6);
+        delay_ms(100);
+        GPIOA->ODR &= ~(1 << 6);
+
         led_red_enable = 0;
     } else {
         GPIOB->ODR &= ~((1 << 1) | (1 << 2) | (1 << 4));
