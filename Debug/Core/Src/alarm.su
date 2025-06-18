@@ -1,4 +1,4 @@
 ../Drivers/CMSIS/Include/core_cm4.h:1684:22:__NVIC_EnableIRQ	16	static,ignoring_inline_asm
-../Core/Src/alarm.c:9:6:TIM2_IRQHandler	8	static
-../Core/Src/alarm.c:24:6:handleAlarm	32	static
-../Core/Src/alarm.c:96:13:getSystemState	16	static
+../Core/Src/alarm.c:9:6:TIM2_IRQHandler	4	static
+../Core/Src/alarm.c:20:6:handleAlarm	32	static
+../Core/Src/alarm.c:74:13:getSystemState	16	static

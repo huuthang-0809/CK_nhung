@@ -82,13 +82,12 @@ static void I2C1_Init(void) {
 // Cấu hình Timer2 cho nhấp nháy LED
 static void Timer2_Init(void) {
     RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
-    TIM2->PSC = 16000 - 1; // Tần số timer ~1 kHz (giả sử HCLK = 16 MHz)
-    TIM2->ARR = 1000; // Chu kỳ ~1 giây
-    TIM2->DIER |= TIM_DIER_UIE; // Bật ngắt cập nhật
-    TIM2->CR1 |= TIM_CR1_CEN; // Bật counter
-    NVIC_EnableIRQ(TIM2_IRQn); // Bật ngắt
-    NVIC_SetPriority(TIM2_IRQn, 0); // Đặt ưu tiên cao
-    UART2_SendString("Timer2_Init: TIM2 configured, PSC=16000, ARR=1000\n");
+    TIM2->PSC = 16000 - 1;
+    TIM2->ARR = 1000;
+    TIM2->DIER |= TIM_DIER_UIE;
+    TIM2->CR1 |= TIM_CR1_CEN;
+    NVIC_EnableIRQ(TIM2_IRQn);
+    NVIC_SetPriority(TIM2_IRQn, 0);
 }
 
 // Khởi tạo tất cả phần cứng

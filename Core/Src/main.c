@@ -21,10 +21,9 @@ int main(void) {
                     safe_timer--; // Giảm thời gian reset
                 } else {
                     // Hoạt động bình thường
-                	//if(safe_timer == 0) {
-                        TIM2->CR1 |= TIM_CR1_CEN;  // Bật counter của TIM2
-                        NVIC_EnableIRQ(TIM2_IRQn); // Bật ngắt của TIM2
-                	//}
+                    TIM2->CR1 |= TIM_CR1_CEN;  // Bật counter của TIM2
+                    NVIC_EnableIRQ(TIM2_IRQn); // Bật ngắt của TIM2
+
                     handleAlarm(gas_ppm);
                     updateDisplay(gas_ppm, false);
                 }

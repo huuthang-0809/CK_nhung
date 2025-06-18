@@ -11,21 +11,13 @@ void TIM2_IRQHandler(void) {
         TIM2->SR &= ~TIM_SR_UIF; // Xóa cờ ngắt
         if (led_red_enable) {
             GPIOB->ODR ^= (1 << 1);  // Toggle LED đỏ
-            UART2_SendString("TIM2_IRQHandler: LED toggled\n");
         } else {
-            GPIOB->ODR &= ~(1 << 1); // Tắt LED
-            UART2_SendString("TIM2_IRQHandler: LED off\n");
+            GPIOB->ODR &= ~(1 << 1);
         }
-    } else {
-        UART2_SendString("TIM2_IRQHandler: UIF not set\n");
     }
 }
 
 void handleAlarm(float gas_ppm) {
-    UART2_SendString("gas_ppm: ");
-    UART2_SendFloat(gas_ppm, 0);
-    UART2_SendString("\n");
-
     if (gas_ppm > THRESHOLD_DANGER) {
         GPIOB->ODR &= ~((1 << 2) | (1 << 3) | (1 << 4));
         GPIOA->ODR |= (1 << 1) | (1 << 5);
@@ -43,9 +35,6 @@ void handleAlarm(float gas_ppm) {
         TIM2->CR1 |= TIM_CR1_CEN;  // Bật counter
         TIM2->DIER |= TIM_DIER_UIE; // Bật ngắt cập nhật
         NVIC_EnableIRQ(TIM2_IRQn);  // Bật ngắt NVIC
-        UART2_SendString("Danger: TIM2 enabled, ARR=");
-        UART2_SendFloat(blink_period, 0);
-        UART2_SendString("\n");
     } else if (gas_ppm > THRESHOLD_WARNING) {
         GPIOB->ODR &= ~((1 << 2) | (1 << 3) | (1 << 4));
         GPIOA->ODR |= (1 << 1) | (1 << 5);
@@ -79,17 +68,6 @@ void handleAlarm(float gas_ppm) {
         TIM2->CR1 &= ~TIM_CR1_CEN; // Tắt counter
         TIM2->DIER &= ~TIM_DIER_UIE; // Tắt ngắt
         UART2_SendString("Safe: LED off, TIM2 disabled\n");
-    }
-    // Debug trạng thái timer và ngắt
-    if (TIM2->CR1 & TIM_CR1_CEN) {
-        UART2_SendString("TIM2 bat\n");
-    } else {
-        UART2_SendString("TIM2 tat\n");
-    }
-    if (TIM2->DIER & TIM_DIER_UIE) {
-        UART2_SendString("TIM2 ngat bat\n");
-    } else {
-        UART2_SendString("TIM2 ngat tat\n");
     }
 }
 

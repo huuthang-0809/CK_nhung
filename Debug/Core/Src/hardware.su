@@ -7,9 +7,9 @@
 ../Core/Src/hardware.c:51:13:ADC1_Init	4	static
 ../Core/Src/hardware.c:65:13:I2C1_Init	4	static
 ../Core/Src/hardware.c:83:13:Timer2_Init	8	static
-../Core/Src/hardware.c:95:6:initHardware	8	static
-../Core/Src/hardware.c:105:6:handleSystemState	16	static
-../Core/Src/hardware.c:133:6:USART2_Init	16	static
-../Core/Src/hardware.c:149:6:UART2_SendChar	16	static
-../Core/Src/hardware.c:155:6:UART2_SendString	16	static
-../Core/Src/hardware.c:160:6:UART2_SendFloat	56	static
+../Core/Src/hardware.c:94:6:initHardware	8	static
+../Core/Src/hardware.c:104:6:handleSystemState	16	static
+../Core/Src/hardware.c:132:6:USART2_Init	16	static
+../Core/Src/hardware.c:148:6:UART2_SendChar	16	static
+../Core/Src/hardware.c:154:6:UART2_SendString	16	static
+../Core/Src/hardware.c:159:6:UART2_SendFloat	56	static
